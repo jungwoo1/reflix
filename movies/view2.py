@@ -27,87 +27,89 @@ def moviePickUp(request):
     #for n in range(1, 6):
         #num = str(n)
         # 영화 목록 url
-    LIST_URL = f"https://api.themoviedb.org/3/discover/movie?api_key={TMD_KEY}&language=ko-KR&page=1"
-    re_listurl = urllib.request.Request(LIST_URL)
-    response = urllib.request.urlopen(re_listurl)
-    rescode = response.getcode()
-    if(rescode==200):
-        response_body = response.read()
-        resDatas = json.loads(response_body.decode('utf-8'))
-
-    for resData in resDatas['results']:
-        # 영화의 TMD id
-
-        tmd_id = resData['id']
-
-        # 영화 detail url
-        DETAIL_URL = f"https://api.themoviedb.org/3/movie/{tmd_id}?api_key={TMD_KEY}&language=ko-KR"
-        re_detailurl = urllib.request.Request(DETAIL_URL)
-        response = urllib.request.urlopen(re_detailurl)
-        if (rescode == 200):
+    for n in range(1, 6):
+        num = str(n)
+        LIST_URL = f"https://api.themoviedb.org/3/discover/movie?api_key={TMD_KEY}&language=ko-KR&page={num}"
+        re_listurl = urllib.request.Request(LIST_URL)
+        response = urllib.request.urlopen(re_listurl)
+        rescode = response.getcode()
+        if(rescode==200):
             response_body = response.read()
-            detailData = json.loads(response_body.decode('utf-8'))
-        # 영화 감독 //
-        CREDITS_URL = f"https://api.themoviedb.org/3/movie/{tmd_id}/credits?api_key={TMD_KEY}"
-        re_creditsurl = urllib.request.Request(CREDITS_URL)
-        response = urllib.request.urlopen(re_creditsurl)
-        if (rescode == 200):
-            response_body = response.read()
-            resdirectors = json.loads(response_body.decode('utf-8'))
+            resDatas = json.loads(response_body.decode('utf-8'))
+
+        for resData in resDatas['results']:
+            # 영화의 TMD id
+
+            tmd_id = resData['id']
+
+            # 영화 detail url
+            DETAIL_URL = f"https://api.themoviedb.org/3/movie/{tmd_id}?api_key={TMD_KEY}&language=ko-KR"
+            re_detailurl = urllib.request.Request(DETAIL_URL)
+            response = urllib.request.urlopen(re_detailurl)
+            if (rescode == 200):
+                response_body = response.read()
+                detailData = json.loads(response_body.decode('utf-8'))
+            # 영화 감독 //
+            CREDITS_URL = f"https://api.themoviedb.org/3/movie/{tmd_id}/credits?api_key={TMD_KEY}"
+            re_creditsurl = urllib.request.Request(CREDITS_URL)
+            response = urllib.request.urlopen(re_creditsurl)
+            if (rescode == 200):
+                response_body = response.read()
+                resdirectors = json.loads(response_body.decode('utf-8'))
 
 
-        director = ""
-        for resdirector in resdirectors['cast']:
-            # job이 Director인 사람의 이름 찾기
-            print(resdirector)
-            if 'job' in resdirector :
-                if (resdirector['job'] == 'Director'):
-                    director = resdirector['name']
-                    break
-                else:
-                    director = ""
+            director = ""
+            for resdirector in resdirectors['crew']:
+                # job이 Director인 사람의 이름 찾기
+                print(resdirector)
+                if 'job' in resdirector :
+                    if (resdirector['job'] == 'Director'):
+                        director = resdirector['name']
+                        break
+                    else:
+                        director = ""
 
-        # // 영화 감독
+            # // 영화 감독
 
-        # 영화 회사정보
-        resDetailData = detailData['production_companies']
-        if resDetailData:
-            company = resDetailData[0]['name']
-        else:
-            # 영화 회사 정보가 없는 경우
-            company = ""
+            # 영화 회사정보
+            resDetailData = detailData['production_companies']
+            if resDetailData:
+                company = resDetailData[0]['name']
+            else:
+                # 영화 회사 정보가 없는 경우
+                company = ""
 
-        # 홈페이지가 있는경우와 없는 경우 구분
-        # print(detailData.json().get('homepage'))
-        if detailData['homepage'] != None:
-            homepage = detailData['homepage']
-            # print(homepage)
-        else:
-            homepage = ""
+            # 홈페이지가 있는경우와 없는 경우 구분
+            # print(detailData.json().get('homepage'))
+            if detailData['homepage'] != None:
+                homepage = detailData['homepage']
+                # print(homepage)
+            else:
+                homepage = ""
 
-        # 장르가 있는지 없는지
-        if detailData['genres']:
-            genre = detailData['genres'][0]['name']
-        else:
-            genre = ""
+            # 장르가 있는지 없는지
+            if detailData['genres']:
+                genre = detailData['genres'][0]['name']
+            else:
+                genre = ""
 
 
-        Movie.objects.get_or_create(
-        #movie = Movie(
-            title=resData['title'],
-            backdrop_path="https://image.tmdb.org/t/p/original" + resData['backdrop_path'],
-            poster_path="https://image.tmdb.org/t/p/original" + resData['poster_path'],
-            overview=detailData['overview'],
-            release_date=detailData['release_date'],
-            genre=genre,
-            production_company=company,
-            tmd_id=tmd_id,
-            director=director,
-            homepage=homepage,
-        )
-        #movie.save()
+            Movie.objects.get_or_create(
+            #movie = Movie(
+                title=resData['title'],
+                backdrop_path="https://image.tmdb.org/t/p/original" + resData['backdrop_path'],
+                poster_path="https://image.tmdb.org/t/p/original" + resData['poster_path'],
+                overview=detailData['overview'],
+                release_date=detailData['release_date'],
+                genre=genre,
+                production_company=company,
+                tmd_id=tmd_id,
+                director=director,
+                homepage=homepage,
+            )
+            #movie.save()
 
-        # print(movie)
+            # print(movie)
     return render(request, 'movies/moviePickUp.html')
 
 
