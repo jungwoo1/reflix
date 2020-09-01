@@ -212,7 +212,7 @@ def detail(request, id):
                 ul = id
             res.append({'ig': ig, 'ul': ul})
     # // 영화 추천
-    return render(request, 'movies/detail.html',{'movie': movie, 'res' : res ,' ratingAvg' : ratingAvg})
+    return render(request, 'movies/detail.html',{'comment_form':comment_form,'movie': movie, 'res' : res ,' ratingAvg' : ratingAvg})
 
 
 def search(request):
