@@ -7,7 +7,7 @@
                         <div class="main-menu  d-none d-lg-block">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a class="active" href='{% url "movies:main"%}'>home</a></li>
+                                    <li><a class="active" href='{% url "home" %}'>home</a></li>
                                     <li><a href="info.html">info</a></li>
 
                                     <li><a href="{% url 'movies:main' %}">movie <i class="ti-angle-down"></i></a>
@@ -30,7 +30,6 @@
                                             <li><a href="form_review.html">form_review</a></li>
                                         </ul>
                                     </li>
-
                                 </ul>
                             </nav>
                         </div>
@@ -46,7 +45,13 @@
                     <div class="col-xl-5 col-lg-5 d-none d-lg-block">
                         <div class="book_room">
                             <div class="book_btn d-none d-xl-block">
-                                <a class="#" href="join.html">+ join</a>
+                                {% if user.is_authenticated %}
+                                        <a class="nav-link" href="{% url 'movies:person' %}"><i class="fas fa-wine-glass-alt"></i> Today's </a>
+                                        <a class="nav-link"><i class="fas fa-user-alt"></i> {{user}}</a>
+                                        <a class="nav-link" href="{% url 'accounts:logout' %}">Log-out</a>
+                                {% else %}
+                                    <a class="nav-link" href="{% url 'accounts:login' %}">+ join</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

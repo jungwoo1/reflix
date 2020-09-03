@@ -1,4 +1,10 @@
 from django.contrib.auth.mixins import AccessMixin
+from django.shortcuts import render
+
+def homeview(request):
+
+    return render(request, 'home.html')
+
 
 
 class OwnerOnlyMixin(AccessMixin):
