@@ -92,12 +92,16 @@ def moviePickUp(request):
                 genre = detailData['genres'][0]['name']
             else:
                 genre = ""
+            if resData['backdrop_path']:
+                backdrop_path = resData['backdrop_path']
+            else:
+                backdrop_path=""
 
 
             Movie.objects.get_or_create(
             #movie = Movie(
                 title=resData['title'],
-                backdrop_path="https://image.tmdb.org/t/p/original" + resData['backdrop_path'],
+                backdrop_path="https://image.tmdb.org/t/p/original" + backdrop_path,
                 poster_path="https://image.tmdb.org/t/p/original" + resData['poster_path'],
                 overview=detailData['overview'],
                 release_date=detailData['release_date'],
@@ -226,6 +230,7 @@ def search(request):
 
         if searchword:  # searchword가 있다면
             searchMovie = movie.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
+
             if searchMovie:
                 # 영화 여러개 저장위해 데이터의 개수
                 movie_count = searchMovie.count()
@@ -233,7 +238,10 @@ def search(request):
                     # 데이터들 resultMovie리스트에 저장
                     # 원본 주석처리
                     # resultMovie.append({searchMovie[c].title:searchMovie[c].id})
-                    resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id})
+                    print(searchMovie[c].poster_path)
+                    poster_path = "https://image.tmdb.org/t/p/w500" + searchMovie[c].poster_path
+
+                    resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id,'poster_path':poster_path,'asd':123})
                     # 디테일 페이지 이동위해 id값도 넘겨준다
                 return render(request, 'movies/searchresult.html',
                               {'movie': movie, 'searchMovie': searchMovie, 'resultMovie': resultMovie})

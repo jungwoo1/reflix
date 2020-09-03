@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
-{% load bootstrap4 %}
-{% load static %}
 {% block bb %}
         <div class="col-md-12 p-0">
             <!--나중에 이미지 바꾸고 크기 조정해야함 & 글자 가운데 정렬-->
-            <img src="/static/images/search2.jpg" style="width:100%; height:600px" class="img-responsive" >
+            <img src="../static/images/search2.jpg" style="width:100%; height:600px" class="img-responsive" >
               <div class="carousel-caption">
               <h1 class=" text-black mb-0 pt-md-5 pt-5 wow fadeInDown" data-wow-delay="0.3s" style="font-family: 'Playfair Display SC'">Todal Movie</h1>         
                 <br><br><br>
@@ -25,24 +23,13 @@
     <div class="container">
         <br>
         <!--resultMovie에 데이트가 있다면 영화 딕셔너리 출력 후 디테일 링크 -->
-        {% if resultMovie %}
+        {% if resultReview %}
             <ul>
             <h2 class="fontchange" style="font-family: 'Noto Sans KR', sans-serif;"><strong>검색결과</strong></h2><br>
-            {% for rm in resultMovie %}
-                <a class="h5 text-dark" style="font-family: 'Noto Sans KR', sans-serif;" href="{% url 'movies:detail' rm.id %}">{{rm}}{{rm.poster_path}}</a>
+            {% for rm in resultReview %}
+                <a class="h5 text-dark" style="font-family: 'Noto Sans KR', sans-serif;" href="{% url 'review:redetail' rm.id %}">{{rm.title}}</a>
                 <!--검색 결과에 이미지도 추가하고 싶은데..방법이 안떠오름-->
                 <br><br>
-                <div class=" col-md-4 col-lg-3 my-3" >
-                    <div class="d-flex justify-content-center mt-4">
-                        <a href="{% url 'movies:detail' rm.id %}">
-                            <img src="{{rm.poster_path}}"class="card-img-top" alt="..." style="height:305px; width:200px" id="mainImg" >
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-title text-center" ><strong>{{rm.title|truncatechars:15}}</strong></h6>
-                        <hr>
-                    </div>
-                </div>
             {% endfor %}
             </ul>
         {% else %}
@@ -52,6 +39,4 @@
             </ul>
         {% endif %}
     </div>
-    <h2 class="text-center mt-5" style="font-family: 'Playfair Display SC';text-decoration: underline; "><b>movie list</b></h2>
-
 {% endblock %}

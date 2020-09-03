@@ -1,0 +1,60 @@
+<header>
+    <div class="header-area ">
+        <div id="sticky-header" class="main-header-area">
+            <div class="container-fluid p-0">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-xl-5 col-lg-5">
+                        <div class="main-menu  d-none d-lg-block">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a class="active" href='{% url "movies:main"%}'>home</a></li>
+                                    <li><a href="info.html">info</a></li>
+
+                                    <li><a href="{% url 'movies:main' %}">movie <i class="ti-angle-down"></i></a>
+                                        <ul class="submenu">
+
+                                            <li><a href="comedy.html">comedy</a></li>
+                                            <li><a href="SF.html">SF</a></li>
+                                            <li><a href="action.html">action</a></li>
+                                            <li><a href="thriller.html">thriller</a></li>
+                                            <li><a href="documentary.html">documentary</a></li>
+                                            <li><a href="romance.html">romance</a></li>
+                                            <li><a href="animation.html">animation</a></li>
+                                            <li><a href="horror.html">horror</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="{% url 'review:index' %}">review <i class="ti-angle-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'review:before' %}">before</a></li>
+                                            <li><a href="{% url 'review:after' %}">after</a></li>
+                                            <li><a href="form_review.html">form_review</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2">
+                        <div class="logo-img">
+                            <a href="index.html">
+                                <!-- reflix 로고 만들어 넣기 -->
+                                <img src="/static/images/REFLIX_LOGO.png" width="200" height="200" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-5 d-none d-lg-block">
+                        <div class="book_room">
+                            <div class="book_btn d-none d-xl-block">
+                                <a class="#" href="join.html">+ join</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

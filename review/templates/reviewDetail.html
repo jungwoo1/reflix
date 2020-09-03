@@ -1,0 +1,105 @@
+{% extends 'reviewbase.html' %}
+{% load bootstrap4 %}
+<div class="bradcam_area breadcam_bg">
+    <h3>review [detail]</h3>
+</div>
+{% block bb %}
+{{review.update_counter }}
+    <article class="blog_item">
+        <div class="blog_item_img">
+            <img class="card-img rounded-0" src="/static/images/exit.jpg" width="750" height="350"alt="">
+            <a href="#" class="blog_item_date">
+                <h3>{{ review.create_date }}</h3>
+            </a>
+        </div>
+
+        <div class="blog_details">
+            <div>
+                <h2>리뷰 타이틀<br>
+                    {{ review.title }}</h2>
+            </div>
+
+            </a>
+
+            <p class="lead">{{ review.content | safe }}</p>
+            <ul class="blog-info-link">
+                <li><a href="#"><i class="fa fa-user"></i> {{ review.user}}</a></li>
+                <li><a href="#"><i class="fa fa-user"></i> {{ review.genre }}</a></li>
+                <li><i class="fa fa-comments"></i> {{review.detgle_set.all.count}} Comments</li>
+                <li>스포일러 : {{review.spo}}</li>
+                <li style="margin-left:160px">| {{review.read_cnt}} 조회수 |</li>
+            </ul>
+        </div>
+    </article>
+    <div class="navigation-area">
+         <div class="row">
+            <div
+               class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                 {%if review.get_previous %}
+               <div class="thumb">
+                  <a href="#">
+                     <img class="img-fluid" src="img/lala.jpg" width="60" height="60" alt="">
+                  </a>
+               </div>
+               <div class="arrow">
+                  <a href="#">
+                     <span class="lnr text-white ti-arrow-left"></span>
+                  </a>
+               </div>
+               <div class="detials">
+                  <p>Prev Review</p>
+                  <a href="#">
+                     <h4>이전 리뷰 타이틀</h4>
+                  </a>
+               </div>
+                    {% endif %}
+            </div>
+        <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+            {% if review.get_next %}
+           <div class="detials">
+              <p>Next Review</p>
+              <a href="#">
+                 <h4>다음 리뷰 타이틀</h4>
+              </a>
+           </div>
+           <div class="arrow">
+              <a href="#">
+                 <span class="lnr text-white ti-arrow-right"></span>
+              </a>
+           </div>
+           <div class="thumb">
+              <a href="#">
+                 <img class="img-fluid" src="img/inception.jpg"  width="60" height="60" alt="">
+              </a>
+           </div>
+            {% endif %}
+        </div>
+    </div>
+        {% if user.is_authenticated %}
+        <div class="col-12" >
+            <form action="{% url 'review:commentCreate' review.id %}" method="POST">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                <input type="submit" value="작성" class="btn btn-warning btn-sm">
+            </form>
+
+        {% endif %}
+        {% for comment in review.detgle_set.all %}
+            <div class="inblockclass">
+                <p style="display: inline-block">{{ comment.content }}</p> <br></a><div style="margin-left:auto"> | <strong >{{comment.user.username}}</strong> <a class="font-weight-light">&nbsp; {{ comment.created_at }}</a></div>
+                <div class="col-11" style='width:100% display: inline-block'></div>
+                <!--댓글 삭제-->
+                    <div class="col-1" style="margin-left:auto">
+                    {% if comment.user == user %}
+                        <form method='POST' action="{% url 'review:commentDelete' review.id comment.id %}" style="display: inline-block ">
+                            {% csrf_token %}
+                            <input type="submit" value="삭제" class="btn btn-danger btn-sm "/>
+                        </form>
+                    {% endif %}
+                    </div>
+            </div>
+            <hr>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

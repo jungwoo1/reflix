@@ -1,10 +1,9 @@
 {% extends 'reviewbase.html' %}
 {% block tatle %}
 <div class="bradcam_area breadcam_bg">
-    <h3>review [total]</h3>
+    <h3>review [before]</h3>
 </div>
 {% endblock %}
-
 {% block bb %}
 {% for review in reviews %}
 <article class="blog_item">
@@ -25,6 +24,7 @@
                 <li><a href="#"><i class="fa fa-comments"></i> {{review.detgle_set.all.count}} Comments</a></li>
                 <li>스포일러 : {{review.spo}}</li>
                 <li style="margin-left:160px">| {{review.read_cnt}} 조회수 |</li>
+
             </ul>
         </a>
     </div>

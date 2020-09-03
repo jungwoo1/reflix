@@ -21,7 +21,7 @@ from review import views
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
-    path('', view2.main),
+    path('',view2.main),
     path('review/', include('review.urls')),
     path('admin/', admin.site.urls),
     path('movies/', include('movies.urls')),

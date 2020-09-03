@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'review.apps.ReviewConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'taggit.apps.TaggitAppConfig',
+    'taggit_templatetags2',
+    'widget_tweaks',
 ]
 
 CKEDITOR_UPLOAD_PATH ="uploads/"
