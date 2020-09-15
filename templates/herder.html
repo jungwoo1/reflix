@@ -8,19 +8,19 @@
                             <nav>
                                 <ul id="navigation">
                                     <li><a class="active" href='{% url "home" %}'>home</a></li>
-                                    <li><a href="info.html">info</a></li>
+                                    <li><a href="{% url 'info' %}">info</a></li>
 
                                     <li><a href="{% url 'movies:main' %}">movie <i class="ti-angle-down"></i></a>
                                         <ul class="submenu">
 
-                                            <li><a href="comedy.html">comedy</a></li>
-                                            <li><a href="SF.html">SF</a></li>
-                                            <li><a href="action.html">action</a></li>
-                                            <li><a href="thriller.html">thriller</a></li>
-                                            <li><a href="documentary.html">documentary</a></li>
-                                            <li><a href="romance.html">romance</a></li>
-                                            <li><a href="animation.html">animation</a></li>
-                                            <li><a href="horror.html">horror</a></li>
+                                            <li><a href="{% url 'movies:Comedy' %}">comedy</a></li>
+                                            <li><a href="{% url 'movies:SF' %}">SF</a></li>
+                                            <li><a href="{% url 'movies:Action' %}">action</a></li>
+                                            <li><a href="{% url 'movies:Thriller' %}">thriller</a></li>
+                                            <li><a href="{% url 'movies:Documentary' %}">documentary</a></li>
+                                            <li><a href="{% url 'movies:Romance' %}">romance</a></li>
+                                            <li><a href="{% url 'movies:Animation' %}">animation</a></li>
+                                            <li><a href="{% url 'movies:Horror' %}">horror</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="{% url 'review:index' %}">review <i class="ti-angle-down"></i></a>

@@ -19,6 +19,51 @@ def cleanhtml(raw_html):
 
 
 # 영화 데이터 수집용 페이지 - 사용자는 알 필요없음
+def movie_Action(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="액션")
+    paginator = Paginator(movies, 8)  # Show 20 contacts per page
+    page = request.GET.get('page')
+    try:
+        movies = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        movies = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        movies = paginator.page(paginator.num_pages)
+    # // pagination
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_comedy(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="코미디")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_SF(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="SF")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_Animation(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="애니메이션")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_thriller(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="스릴러")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_horror(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="공포")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_romance(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="로맨스")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+def movie_documentary(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="다큐멘터리"
+                                    "")
+    return render(request, 'movies/movieList.html', {'movies': movies})
+
 
 def moviePickUp(request):
     # the movie db key

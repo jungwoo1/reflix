@@ -22,6 +22,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('',views.homeview, name="home"),
+    path('info/',views.infoview, name="info"),
+
     path('review/', include('review.urls')),
     path('admin/', admin.site.urls),
     path('movies/', include('movies.urls')),
