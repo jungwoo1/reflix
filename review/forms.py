@@ -9,7 +9,7 @@ class CreateReview(forms.ModelForm):
     class Meta:
         model = Review
 
-        fields = ['title','movie_title','genre','spo','content']
+        fields = ['title','movie_title','genre','spo','content',]
 
         widgets = {
             'title' : forms.TextInput(
@@ -22,10 +22,11 @@ class CreateReview(forms.ModelForm):
                 attrs={'class': 'form-control', 'style': 'width:100%', 'placeholder': '영화 장르을 입력하세요.'}
             ),
             'spo': forms.Select(
-                attrs={'class': 'form-control', 'style': 'width:10%', 'placeholder': '영화 장르을 입력하세요.'},
+                attrs={'class': 'form-control', 'style': 'width:10%'},
                 choices=SPO_CHOICES,
             ),
             'content' : forms.CharField(widget=CKEditorUploadingWidget()),
+
         }
 # class EditReview(forms.ModelForm):
 #     class Meta:

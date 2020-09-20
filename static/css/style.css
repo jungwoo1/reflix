@@ -199,12 +199,12 @@ h3 {
 
 /* line 136, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/theme-default.scss */
 .bg-img-2 {
-  background-image: url(../images/background-img/bg-img-2.jpg);
+  background-image: url(/static/images/background-img/bg-img-2.jpg);
 }
 
 /* line 139, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/theme-default.scss */
 .cta-bg-1 {
-  background-image: url(../images/background-img/bg-img-3.jpg);
+  background-image: url(/static/images/background-img/bg-img-3.jpg);
 }
 
 /* line 144, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/theme-default.scss */
@@ -1576,14 +1576,14 @@ h3 {
 
 /* line 305, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_slider.scss */
 .property_bg {
-  background-image: url(../images/banner/property.png);
+  background-image: url(/static/images/banner/property.png);
 }
 
 /* line 1, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_about.scss */
 .about_area {
   padding-bottom: 210px;
   padding-top: 150px;
-  background-image: url(../images/banner/burger_bg_1.png);
+  background-image: url(/static/images/banner/burger_bg_1.png);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -1713,7 +1713,7 @@ h3 {
 
 /* line 88, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_about.scss */
 .about_bg_1 {
-  background-image: url(../images/banner/about_banner.png);
+  background-image: url(/static/images/banner/about_banner.png);
 }
 
 /* line 91, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_about.scss */
@@ -1850,7 +1850,7 @@ h3 {
 
 /* line 5, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_offers.scss */
 .video_bg {
-  background-image: url(../images/엑1.jpg);
+  background-image: url(/static/images/엑1.jpg);
 }
 
 /* line 8, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_offers.scss */
@@ -2373,7 +2373,7 @@ h3 {
   background-repeat: no-repeat;
   background-size: cover;
   background: #F5FBFF;
-  background-image: url(../images/banner/footer_bg.png);
+  background-image: url(/static/images/banner/footer_bg.png);
 }
 
 /* line 8, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_footer.scss */
@@ -2664,17 +2664,17 @@ h3 {
 
 /* line 1, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_bradcam.scss */
 .breadcam_bg {
-  background-image: url(../images/movie_banner.jpg);
+  background-image: url(/static/images/movie_banner.jpg);
 }
 
 /* line 4, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_bradcam.scss */
 .breadcam_bg_1 {
-  background-image: url(../images/movie_banner.jpg);
+  background-image: url(/static/images/movie_banner.jpg);
 }
 
 /* line 7, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_bradcam.scss */
 .breadcam_bg_2 {
-  background-image: url(../images/movie_banner.jpg);
+  background-image: url(/static/images/movie_banner.jpg);
 }
 
 /* line 10, ../../Arafath/CL/December/229. Restaurant (Burger)/HTML/scss/_bradcam.scss */
@@ -2720,7 +2720,7 @@ h3 {
 .best_burgers_area {
   padding-bottom: 115px;
   padding-top: 140px;
-  background-image: url(../images/banner/burger_bg.png);
+  background-image: url(/static/images/banner/burger_bg.png);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

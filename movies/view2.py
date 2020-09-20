@@ -33,36 +33,36 @@ def movie_Action(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         movies = paginator.page(paginator.num_pages)
     # // pagination
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies,"genre":"Action"})
 def movie_comedy(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="코미디")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies,"genre":"Comedy"})
 def movie_SF(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="SF")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies,"genre":"SF"})
 def movie_Animation(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="애니메이션")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies,"genre":"Animation"})
 def movie_thriller(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="스릴러")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies,"genre":"thriller"})
 def movie_horror(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="공포")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies, "genre": "Horror"})
 def movie_romance(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="로맨스")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    return render(request, 'movies/movieList.html', {'movies': movies, "genre": "Romance"})
 def movie_documentary(request):
     movielist = Movie.objects.all()
-    movies = movielist.filter(genre="다큐멘터리"
-                                    "")
-    return render(request, 'movies/movieList.html', {'movies': movies})
+    movies = movielist.filter(genre="다큐멘터리")
+    genre = "Documentay"
+    return render(request, 'movies/movieList.html', {'movies': movies, "genre": genre})
 
 
 def moviePickUp(request):
@@ -165,7 +165,7 @@ def moviePickUp(request):
 def main(request):
     # pagination //
     movie_list = Movie.objects.all()
-    paginator = Paginator(movie_list, 20)  # Show 20 contacts per page
+    paginator = Paginator(movie_list, 8)  # Show 20 contacts per page
     page = request.GET.get('page')
     try:
         movies = paginator.page(page)

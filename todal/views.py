@@ -1,10 +1,36 @@
 from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import render
+from movies.models import Movie
+from review.models import Review
 
 def homeview(request):
+    movie = Movie.objects.all()
+    if request.method == "GET":
+        searchword = request.GET.get('searchword', '')
+        resultMovie = []
+
+        if searchword:  # searchword가 있다면
+            searchMovie = movie.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
+            if searchMovie:
+                # 영화 여러개 저장위해 데이터의 개수
+                movie_count = searchMovie.count()
+                for c in range(movie_count):
+                    # 데이터들 resultMovie리스트에 저장
+                    # 원본 주석처리
+                    # resultMovie.append({searchMovie[c].title:searchMovie[c].id})
+                    resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id})
+                    # 디테일 페이지 이동위해 id값도 넘겨준다
+                # print(resultMovie)
+                return render(request, 'movies/searchresult.html',
+                              {'movie': movie, 'searchMovie': searchMovie, 'resultMovie': resultMovie})
+            else:
+                # 아무것도 입력하지 않는다면,
+                return render(request, 'movies/searchresult.html', {'resultMovie': resultMovie})
 
     return render(request, 'home.html')
+
 def infoview(request):
+
 
     return render(request, 'info.html')
 
