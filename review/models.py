@@ -16,6 +16,7 @@ class Review(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     tag = TaggableManager(blank=True)
     read_cnt = models.IntegerField('READ_CNT', default=0)
+    SNImg = models.ImageField(null=True)
 
     class Mete:
         ordering = ('-create_date',) #orderby 절, -이면 내림차순순 컴마한거봐서 튜플임을 알수있음

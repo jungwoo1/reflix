@@ -9,7 +9,7 @@ class CreateReview(forms.ModelForm):
     class Meta:
         model = Review
 
-        fields = ['title','movie_title','genre','spo','content',]
+        fields = ['title','movie_title','genre','spo','SNImg','content',]
 
         widgets = {
             'title' : forms.TextInput(
@@ -25,6 +25,8 @@ class CreateReview(forms.ModelForm):
                 attrs={'class': 'form-control', 'style': 'width:10%'},
                 choices=SPO_CHOICES,
             ),
+            'SNImg': forms.FileInput()
+            ,
             'content' : forms.CharField(widget=CKEditorUploadingWidget()),
 
         }

@@ -34,7 +34,7 @@ def reviewdetale(requset,id):
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
-    fields = ['title', 'movie_title', 'genre', 'content','spo','tag']
+    fields = ['title', 'movie_title', 'genre', 'SNImg','content','spo','tag']
     #fields = ['title', 'description', 'content', 'tags']
     success_url = reverse_lazy('review:index')
 
@@ -54,7 +54,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
 class ReviewUpdateView(OwnerOnlyMixin, UpdateView):
     model = Review
-    fields = ['title', 'movie_title', 'genre', 'content','spo','tag']
+    fields = ['title', 'movie_title', 'genre', 'SNImg','content','spo','tag']
     success_url = reverse_lazy('review:index')
 
     def form_valid(self, form):
@@ -77,13 +77,15 @@ class ReviewUpdateView(OwnerOnlyMixin, UpdateView):
 def createReview(request):
 
     if request.method == 'POST':
-        form = CreateReview(request.POST)
+        form = CreateReview(request.POST,request.FILES)
 
         if form.is_valid():
             form.instance.user = request.user
             form.save()
+
             return redirect('review:index')
         else:
+            print(form.errors)
             return redirect('movies:main')
     else:
         form = CreateReview()
@@ -107,6 +109,7 @@ def edit(request,id):
             review.genre = form.cleaned_data['genre']
             review.spo = form.cleaned_data['spo']
             review.content = form.cleaned_data['content']
+            review.SNImg = form.cleaned_data['SNImg']
             review.save()
             return redirect('/review/' + str(id))
 

@@ -9,7 +9,12 @@
 {% for review in reviews %}
 <article class="blog_item">
     <div class="blog_item_img">
+
+        {% if review.SNImg %}
+        <img class="card-img rounded-0" src="{{review.SNImg.url}}" width="750" height="350" alt="">
+        {% else %}
         <img class="card-img rounded-0" src="/static/images/exit.jpg" width="750" height="350" alt="">
+        {% endif %}
         <a href="#" class="blog_item_date">
             <h3>{{ review.create_date }}</h3>
         </a>
