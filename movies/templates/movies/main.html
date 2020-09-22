@@ -11,8 +11,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="justify-content-center">
+                              <form method="GET" class="d-flex justify-content-center">
+                                  <i class="fas fa-search fa-2x"></i>
+                                  <input type="text" name="searchword" value="{{searchword}}" placeholder="작품 제목을 검색해보세요." class="shadow-lg rounded border border-dark w-75 p-2">
+                                  <div class="fontchange" style="font-family: 'Noto Sans KR', sans-serif;"></div>
+                              </form>
+                    </div>
                     <div class="section_title text-center mb-80">
-                        <span>romance movie</span>
+                        <span>totla movie</span>
                         <h3>Best Ever movies</h3>
                     </div>
                 </div>
@@ -53,11 +60,6 @@
                   <a class="page-link text-dark" href="?page={{ movies.previous_page_number }}">previous</a>
                 </li>
             {% endif %}
-                <li class="page-item"><a class="page-link text-dark" href="?page=1">1</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="?page=2">2</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="?page=3">3</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="?page=4">4</a></li>
-                <li class="page-item"><a class="page-link text-dark" href="?page=5">5</a></li>
             {% if movies.has_next %}
                 <li class="page-item">
                   <a class="page-link text-dark" href="?page={{ movies.next_page_number }}">Next</a>

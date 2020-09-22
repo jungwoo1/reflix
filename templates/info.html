@@ -59,7 +59,7 @@
                             <span>before</span>
                             <h3>The Burger President</h3>
                             <p>영화를 보기 전 리뷰, 스포일러 걱정 안해도 됨 <br> and relevant.</p>
-                            <a href="#" class="boxed-btn3">Order Now</a>
+                            <a href="{% url 'review:before' %}" class="boxed-btn3">보러가기</a>
                         </div>
 
                     </div>
@@ -73,7 +73,7 @@
                             <span>after</span>
                             <h3>The Burger President</h3>
                             <p>영화를 본 뒤 리뷰, 다양한 시각과 해설로 영화를 더 다양하게 즐길 수 있다. <br> and relevant.</p>
-                            <a href="#" class="boxed-btn3">Order Now</a>
+                            <a href="{% url 'review:after' %}" class="boxed-btn3">보러가기</a>
                         </div>
                     </div>
                 </div>
@@ -95,78 +95,6 @@
                                 <h3>매월 화요일<br>
                                     best reviewer 선정</h3>
                             </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="testmonial_active owl-carousel">
-                        <div class="single_carousel">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <div class="single_testmonial text-center">
-                                        <p>{{one_id.title}}</p>
-                                        <div class="testmonial_author">
-                                            <div class="thumb">
-                                                <img src="/static/images/testmonial/1.png" alt="">
-                                            </div>
-                                            <h4>Kristiana Chouhan</h4>
-                                            <div class="stars">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_carousel">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <div class="single_testmonial text-center">
-                                        <p>“495592405094649857-57-8940946리뷰 내용418475091878173049873019857019857091874308947109874230985."</p>
-                                        <div class="testmonial_author">
-                                            <div class="thumb">
-                                                <img src="/static/images/testmonial/2.png" alt="">
-                                            </div>
-                                            <h4>Arafath Hossain</h4>
-                                            <div class="stars">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single_carousel">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <div class="single_testmonial text-center">
-                                        <p>“ngjflnvlajnlajkfne리뷰 내용kjbfaeuhfe."</p>
-                                        <div class="testmonial_author">
-                                            <div class="thumb">
-                                                <img src="/static/images/testmonial/3.png" alt="">
-                                            </div>
-                                            <h4>A.H Shemanto</h4>
-                                            <div class="stars">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

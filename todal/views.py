@@ -2,9 +2,16 @@ from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import render
 from movies.models import Movie
 from review.models import Review
-
+def cnt_Review(ran):
+    review = Review.objects.order_by('-read_cnt')
+    resultReview = []
+    for I in range(ran):
+        resultReview.append({'title': review[I].title, 'Mtitle': review[I].movie_title, 'user': review[I].user, 'id': review[I].id,'A': I + 1,
+                             'date': review[I].create_date, 'SNImg': review[I].SNImg})
+    return resultReview
 def homeview(request):
     movie = Movie.objects.all()
+    resultReview = []
     if request.method == "GET":
         searchword = request.GET.get('searchword', '')
         resultMovie = []
@@ -27,7 +34,8 @@ def homeview(request):
                 # 아무것도 입력하지 않는다면,
                 return render(request, 'movies/searchresult.html', {'resultMovie': resultMovie})
 
-    return render(request, 'home.html')
+    resultReview = cnt_Review(3)
+    return render(request, 'home.html', {'reviews': resultReview})
 
 def infoview(request):
 

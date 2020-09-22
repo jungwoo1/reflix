@@ -21,20 +21,29 @@
 
         <div class="blog_details">
             <div>
-                <h2>리뷰 타이틀<br>
-                    {{ review.title }}</h2>
+                <h2><br>
+                    리뷰 제목 : {{ review.title }}</h2>
+            </div>
+            <div>
+                <h2>영화 제목 : {{ review.movie_title }}</h2>
             </div>
 
             </a>
 
             <p class="lead">{{ review.content | safe }}</p>
             <ul class="blog-info-link">
-                <li><a href="#"><i class="fa fa-user"></i> {{ review.user}}</a></li>
-                <li><a href="#"><i class="fa fa-user"></i> {{ review.genre }}</a></li>
+                <li><i class="fa fa-user"></i> {{ review.user}}</a></li>
+                <li><i class="fa fa-user"></i> {{ review.genre }}</a></li>
                 <li><i class="fa fa-comments"></i> {{review.detgle_set.all.count}} Comments</li>
                 <li>스포일러 : {{review.spo}}</li>
-                <li style="margin-left:160px">| {{review.read_cnt}} 조회수 |</li>
+                <li>| {{review.read_cnt}} 조회수 |</li>
             </ul>
+            {% if review.user == user %}
+             <a href="{% url 'review:delete' review.id %}">
+
+            <input type="submit" value="글삭제" class="btn btn-danger btn-sm">
+             </a>
+            {% endif %}
         </div>
     </article>
     <div class="navigation-area">
@@ -43,19 +52,24 @@
                class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
                  {%if review.get_previous %}
                <div class="thumb">
-                  <a href="#">
-                     <img class="img-fluid" src="img/lala.jpg" width="60" height="60" alt="">
+
+                  <a href="{% url 'review:redetail' review.get_previous.id %}">
+                      {%if review.get_previous.SNImg %}
+                      <img class="img-fluid" src="{{review.get_previous.SNImg.url}}" width="60" height="60" alt="">
+                      {% else %}
+                      <img class="img-fluid" src="/static/images/exit.jpg" width="60" height="60" alt="">
+                      {% endif %}
                   </a>
                </div>
                <div class="arrow">
-                  <a href="#">
+                  <a href="{% url 'review:redetail' review.get_previous.id %}">
                      <span class="lnr text-white ti-arrow-left"></span>
                   </a>
                </div>
                <div class="detials">
                   <p>Prev Review</p>
-                  <a href="#">
-                     <h4>이전 리뷰 타이틀</h4>
+                  <a href="{% url 'review:redetail' review.get_previous.id %}">
+                     <h4>{{review.get_previous.title}}</h4>
                   </a>
                </div>
                     {% endif %}
@@ -64,32 +78,40 @@
             {% if review.get_next %}
            <div class="detials">
               <p>Next Review</p>
-              <a href="#">
-                 <h4>다음 리뷰 타이틀</h4>
+              <a href="{% url 'review:redetail' review.get_next.id %}">
+                 <h4>{{review.get_next.title}}</h4>
               </a>
            </div>
            <div class="arrow">
-              <a href="#">
+              <a href="{% url 'review:redetail' review.get_next.id %}">
                  <span class="lnr text-white ti-arrow-right"></span>
               </a>
            </div>
            <div class="thumb">
-              <a href="#">
-                 <img class="img-fluid" src="img/inception.jpg"  width="60" height="60" alt="">
+              <a href="{% url 'review:redetail' review.get_next.id %}">
+                 {%if review.get_next.SNImg %}
+                  <img class="img-fluid" src="{{review.get_next.SNImg.url}}" width="60" height="60" alt="">
+                  {% else %}
+                  <img class="img-fluid" src="/static/images/exit.jpg" width="60" height="60" alt="">
+                  {% endif %}
               </a>
            </div>
             {% endif %}
         </div>
     </div>
-        {% if user.is_authenticated %}
+
         <div class="col-12" >
             <form action="{% url 'review:commentCreate' review.id %}" method="POST">
                 {% csrf_token %}
                 {% bootstrap_form comment_form %}
+                {% if user.is_authenticated %}
                 <input type="submit" value="작성" class="btn btn-warning btn-sm">
+                {% else %}
+                <p>로그인시 작성가능</p>
+                {% endif %}
             </form>
 
-        {% endif %}
+
         {% for comment in review.detgle_set.all %}
             <div class="inblockclass">
                 <p style="display: inline-block">{{ comment.content }}</p> <br></a><div style="margin-left:auto"> | <strong >{{comment.user.username}}</strong> <a class="font-weight-light">&nbsp; {{ comment.created_at }}</a></div>

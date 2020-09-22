@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block bb %}
+{%if reviews%}
 {% for review in reviews %}
 <article class="blog_item">
     <div class="blog_item_img">
@@ -22,21 +23,27 @@
 
     <div class="blog_details">
         <a class="d-inline-block" href="{% url 'review:redetail' review.id %}">
-            <h2>{{ review.title }}<br>
-                {{ review.movie_title}}</h2>
+            <h2>리뷰 제목:{{ review.title }}<br>
+                영화 제목:{{ review.movie_title}}</h2>
             <ul class="blog-info-link">
-                <li><a href="#"><i class="fa fa-user"></i> {{ review.user}}</a></li>
-                <li><a href="#">장르 : {{ review.genre}}</a></li>
-                <li><a href="#"><i class="fa fa-comments"></i> {{review.detgle_set.all.count}} Comments</a></li>
+                <li><i class="fa fa-user"></i> {{ review.user}}</li>
+                <li>장르 : {{ review.genre}}</li>
+                <li><i class="fa fa-comments"></i> {{review.detgle_set.all.count}} Comments</li>
                 <li>스포일러 : {{review.spo}}</li>
-                <li style="margin-left:160px">| {{review.read_cnt}} 조회수 |</li>
+                <li > {{review.read_cnt}} 조회수 |</li>
             </ul>
         </a>
     </div>
 </article>
+
 {% endfor %}
+{% else %}
+    <div class="blog_details">
+            <h2>결과가 없습니다 </h2><br>
+    </div>
+{% endif %}
 <a href="{% url 'review:crReview' %}">
-    <button> main</button>
+    <input type="submit" value="글쓰기" class="btn btn-warning btn-sm">
 </a>
 
 {% endblock %}

@@ -66,24 +66,23 @@
                 <div class="blog_left_sidebar">
                     {% block bb %}
                     {% endblock %}
-                    <nav class="blog-pagination justify-content-center d-flex">
-                        <ul class="pagination">
+                    <nav aria-label="Page navigation example">
+                        <ul class="d-flex justify-content-center my-4">
+                            <h5>Page {{ reviews.number }} of {{ reviews.paginator.num_pages }}.</h5>
+                        </ul>
+
+                        <ul class="pagination justify-content-center text-dark">
+                        {% if reviews.has_previous %}
                             <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Previous">
-                                    <i class="ti-angle-left"></i>
-                                </a>
+                              <a class="page-link text-dark" href="?page={{ reviews.previous_page_number }}">previous</a>
                             </li>
+                        {% endif %}
+
+                        {% if reviews.has_next %}
                             <li class="page-item">
-                                <a href="#" class="page-link">1</a>
+                              <a class="page-link text-dark" href="?page={{ reviews.next_page_number }}">Next</a>
                             </li>
-                            <li class="page-item active">
-                                <a href="#" class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Next">
-                                    <i class="ti-angle-right"></i>
-                                </a>
-                            </li>
+                        {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -91,10 +90,10 @@
             <div class="col-lg-4">
                 <div class="blog_right_sidebar">
                     <aside class="single_sidebar_widget search_widget">
-                        <form action="#">
+                        <form method="GET">
                             <div class="form-group">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder='Search Keyword'
+                                    <input name="searchword" value="{{searchword}}" type="text" class="form-control" placeholder='제목을 입력하세요'
                                            onfocus="this.placeholder = ''"
                                            onblur="this.placeholder = 'Search Keyword'">
                                     <div class="input-group-append">
@@ -103,60 +102,59 @@
                                 </div>
                             </div>
                             <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                    type="submit">Search
+                                    type="submit">검색
                             </button>
                         </form>
                     </aside>
-
                     <aside class="single_sidebar_widget post_category_widget">
                         <h4 class="widget_title">Category</h4>
-                        <ul class="list cat-list">
+                        <ul class="list cat-list" >
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>comedy</p>
-                                    <p>(37)</p>
+                                    <p>({{genre_count.comedy}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>documentary</p>
-                                    <p>(10)</p>
+                                    <p>({{genre_count.documentary}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>animation</p>
-                                    <p>(03)</p>
+                                    <p>({{genre_count.animation}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>thriller</p>
-                                    <p>(11)</p>
+                                    <p>({{genre_count.thriller}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>SF</p>
-                                    <p>(21)</p>
+                                    <p>({{genre_count.SF}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>action</p>
-                                    <p>(09)</p>
+                                    <p>({{genre_count.action}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>romance</p>
-                                    <p>(22)</p>
+                                    <p>({{genre_count.romance}})</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#" class="d-flex">
                                     <p>horror</p>
-                                    <p>(34)</p>
+                                    <p>({{genre_count.horror}})</p>
                                 </a>
                             </li>
                         </ul>
@@ -164,71 +162,23 @@
 
                     <aside class="single_sidebar_widget popular_post_widget">
                         <h3 class="widget_title">Recent review</h3>
-                        <div class="media post_item">
-                            <img src="/static/images/inception.jpg" width="80" height="80" alt="post">
-                            <div class="media-body">
-                                <a href="single_review.html">
-                                    <h3>ㅗㅅㄱ논ㅇㅍㄱㅁㅎ모h...</h3>
-                                </a>
-                                <p>January 12, 2019</p>
+                        {% for cnt in cnt_review %}
+                            <div class="media post_item">
+                                {% if cnt.SNImg %}
+                                    <img src="{{cnt.SNImg.url}}" width="80" height="80" alt="post">
+                                {% else %}
+                                    <img src="/static/images/exit.jpg" width="80" height="80" alt="post">
+                                {% endif %}
+
+                                <div class="media-body">
+                                    <a href="{% url 'review:redetail' cnt.id %}">
+                                        <h3>{{cnt.title}}</h3>
+                                    </a>
+                                    <p>{{ cnt.date|date:"Y-m-d" }} 글쓴이 : {{cnt.user}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="media post_item">
-                            <img src="/static/images/insideout.jpg" width="80" height="80" alt="post">
-                            <div class="media-body">
-                                <a href="single_review.html">
-                                    <h3>ㅁㄱㅎㄱㄷㅎㄱㄷㅎ</h3>
-                                </a>
-                                <p>02 Hours ago</p>
-                            </div>
-                        </div>
-                        <div class="media post_item">
-                            <img src="/static/images/inception.jpg" width="80" height="80" alt="post">
-                            <div class="media-body">
-                                <a href="single_review.html">
-                                    <h3>ㅁㄷㄱㅎㄷㄱㅎㅁㄷㅎㄱㅎ</h3>
-                                </a>
-                                <p>03 Hours ago</p>
-                            </div>
-                        </div>
-                        <div class="media post_item">
-                            <img src="/static/images/다만악.jpg" width="80" height="80" alt="post">
-                            <div class="media-body">
-                                <a href="single_review.html">
-                                    <h3>ㅛㅏ녹ㅁㅇㄹㅇㄹㄴㅇㄹ</h3>
-                                </a>
-                                <p>01 Hours ago</p>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside class="single_sidebar_widget tag_cloud_widget">
-                        <h4 class="widget_title">Tag</h4>
-                        <ul class="list">
-                            <li>
-                                <a href="#">명작</a>
-                            </li>
-                            <li>
-                                <a href="#">감동</a>
-                            </li>
-                            <li>
-                                <a href="#">또</a>
-                            </li>
-                            <li>
-                                <a href="#">취저</a>
-                            </li>
-                            <li>
-                                <a href="#">귀여운</a>
-                            </li>
-                            <li>
-                                <a href="#">추천</a>
-                            </li>
-                            <li>
-                                <a href="#">인생영화</a>
-                            </li>
-                            <li>
-                                <a href="#">비추</a>
-                            </li>
-                        </ul>
+                        {% endfor %}
+
                     </aside>
 
                 </div>

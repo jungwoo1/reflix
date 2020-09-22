@@ -17,50 +17,78 @@ def cleanhtml(raw_html):
   return cleantext
 # Create your views here.
 
-
-# 영화 데이터 수집용 페이지 - 사용자는 알 필요없음
-def movie_Action(request):
-    movielist = Movie.objects.all()
-    movies = movielist.filter(genre="액션")
-    paginator = Paginator(movies, 8)  # Show 20 contacts per page
+def pagenate(request, movies, pag):
+    paginator = Paginator(movies, pag)  # Show 20 contacts per page
     page = request.GET.get('page')
     try:
         movies = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        movies = paginator.page(1)
+         movies = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        movies = paginator.page(paginator.num_pages)
-    # // pagination
+         movies = paginator.page(paginator.num_pages)
+    return movies
+
+
+# 영화 데이터 수집용 페이지 - 사용자는 알 필요없음
+def movie_Action(request):
+    movielist = Movie.objects.all()
+    movies = movielist.filter(genre="액션")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request,movies,8)
+
     return render(request, 'movies/movieList.html', {'movies': movies,"genre":"Action"})
 def movie_comedy(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="코미디")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
     return render(request, 'movies/movieList.html', {'movies': movies,"genre":"Comedy"})
 def movie_SF(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="SF")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
+
     return render(request, 'movies/movieList.html', {'movies': movies,"genre":"SF"})
 def movie_Animation(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="애니메이션")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
     return render(request, 'movies/movieList.html', {'movies': movies,"genre":"Animation"})
 def movie_thriller(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="스릴러")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
     return render(request, 'movies/movieList.html', {'movies': movies,"genre":"thriller"})
 def movie_horror(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="공포")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
     return render(request, 'movies/movieList.html', {'movies': movies, "genre": "Horror"})
 def movie_romance(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="로맨스")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
     return render(request, 'movies/movieList.html', {'movies': movies, "genre": "Romance"})
 def movie_documentary(request):
     movielist = Movie.objects.all()
     movies = movielist.filter(genre="다큐멘터리")
+    if request.method == "GET":
+         movies = search(request,movies)
+    movies = pagenate(request, movies,8)
     genre = "Documentay"
     return render(request, 'movies/movieList.html', {'movies': movies, "genre": genre})
 
@@ -161,53 +189,59 @@ def moviePickUp(request):
             # print(movie)
     return render(request, 'movies/moviePickUp.html')
 
-
 def main(request):
-    # pagination //
-    movie_list = Movie.objects.all()
-    paginator = Paginator(movie_list, 8)  # Show 20 contacts per page
-    page = request.GET.get('page')
-    try:
-        movies = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        movies = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        movies = paginator.page(paginator.num_pages)
-    # // pagination
-
-    # search기능 ############################################
-    movie = Movie.objects.all()
-    # GET request의 인자중에 searchword값이 있으면 가져오고, 없으면 빈 문자열 넣기
+    movies = Movie.objects.all()
     if request.method == "GET":
-        searchword = request.GET.get('searchword', '')
-        resultMovie = []
+        movies = search(request, movies)
+    movies = pagenate(request, movies, 8)
+    return render(request, 'movies/main.html', {'movies': movies})
 
-        if searchword:  # searchword가 있다면
-            searchMovie = movie.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
-            if searchMovie:
-                # 영화 여러개 저장위해 데이터의 개수
-                movie_count = searchMovie.count()
-                for c in range(movie_count):
-                    # 데이터들 resultMovie리스트에 저장
-                    # 원본 주석처리
-                    # resultMovie.append({searchMovie[c].title:searchMovie[c].id})
-                    resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id})
-                    # 디테일 페이지 이동위해 id값도 넘겨준다
-                # print(resultMovie)
-                return render(request, 'movies/searchresult.html',
-                              {'movie': movie, 'searchMovie': searchMovie, 'resultMovie': resultMovie})
-            else:
-                # 아무것도 입력하지 않는다면,
-                return render(request, 'movies/searchresult.html', {'resultMovie': resultMovie})
-
-        return render(request, 'movies/main.html', {'movies': movies})
-    # mainpage에서는
-    # <검색기능>작품의 제목,배우,감독을 검색해 해당 영화의 디테일 페이지로 연결하는 역할을 한다.
-    # 일단 작품의 제목으로 검색하는 것을 구현
-    # <로그인버튼>
-    #############################################################################3
+# def main(request):
+#     # pagination //
+#     movie_list = Movie.objects.all()
+#     paginator = Paginator(movie_list, 8)  # Show 20 contacts per page
+#     page = request.GET.get('page')
+#     try:
+#         movies = paginator.page(page)
+#     except PageNotAnInteger:
+#         # If page is not an integer, deliver first page.
+#         movies = paginator.page(1)
+#     except EmptyPage:
+#         # If page is out of range (e.g. 9999), deliver last page of results.
+#         movies = paginator.page(paginator.num_pages)
+#     # // pagination
+#
+#     # search기능 ############################################
+#     movie = Movie.objects.all()
+#     # GET request의 인자중에 searchword값이 있으면 가져오고, 없으면 빈 문자열 넣기
+#     if request.method == "GET":
+#         searchword = request.GET.get('searchword', '')
+#         resultMovie = []
+#
+#         if searchword:  # searchword가 있다면
+#             searchMovie = movie.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
+#             if searchMovie:
+#                 # 영화 여러개 저장위해 데이터의 개수
+#                 movie_count = searchMovie.count()
+#                 for c in range(movie_count):
+#                     # 데이터들 resultMovie리스트에 저장
+#                     # 원본 주석처리
+#                     # resultMovie.append({searchMovie[c].title:searchMovie[c].id})
+#                     resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id})
+#                     # 디테일 페이지 이동위해 id값도 넘겨준다
+#                 # print(resultMovie)
+#                 return render(request, 'movies/searchresult.html',
+#                               {'movie': movie, 'searchMovie': searchMovie, 'resultMovie': resultMovie})
+#             else:
+#                 # 아무것도 입력하지 않는다면,
+#                 return render(request, 'movies/searchresult.html', {'resultMovie': resultMovie})
+#
+#         return render(request, 'movies/main.html', {'movies': movies})
+#     # mainpage에서는
+#     # <검색기능>작품의 제목,배우,감독을 검색해 해당 영화의 디테일 페이지로 연결하는 역할을 한다.
+#     # 일단 작품의 제목으로 검색하는 것을 구현
+#     # <로그인버튼>
+#     #############################################################################3
 
 
 def detail(request, id):
@@ -266,39 +300,50 @@ def detail(request, id):
     return render(request, 'movies/detail.html',{'comment_form':comment_form,'movie': movie, 'res' : res ,' ratingAvg' : ratingAvg})
 
 
-def search(request):
-    movie = Movie.objects.all()
+def search(request,movies):
     # GET request의 인자중에 searchword값이 있으면 가져오고, 없으면 빈 문자열 넣기
-    if request.method == "GET":
-        searchword = request.GET.get('searchword', '')
-        resultMovie = []
-
-        if searchword:  # searchword가 있다면
-            searchMovie = movie.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
-
-            if searchMovie:
-                # 영화 여러개 저장위해 데이터의 개수
-                movie_count = searchMovie.count()
-                for c in range(movie_count):
-                    # 데이터들 resultMovie리스트에 저장
-                    # 원본 주석처리
-                    # resultMovie.append({searchMovie[c].title:searchMovie[c].id})
-                    print(searchMovie[c].poster_path)
-                    poster_path = "https://image.tmdb.org/t/p/w500" + searchMovie[c].poster_path
-
-                    resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id,'poster_path':poster_path,'asd':123})
-                    # 디테일 페이지 이동위해 id값도 넘겨준다
-                return render(request, 'movies/searchresult.html',
-                              {'movie': movie, 'searchMovie': searchMovie, 'resultMovie': resultMovie})
-            else:
-                # 아무것도 입력하지 않는다면,
-                return render(request, 'movies/searchresult.html', {'resultMovie': resultMovie})
-
-        return render(request, 'movies/search.html')
+    searchword = request.GET.get('searchword', '')
+    if searchword:  # searchword가 있다면
+        searchMovies = movies.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
+    else:
+        searchMovies = movies
+    return searchMovies
     # mainpage에서는
     # <검색기능>작품의 제목,배우,감독을 검색해 해당 영화의 디테일 페이지로 연결하는 역할을 한다.
     # 일단 작품의 제목으로 검색하는 것을 구현
-    # <로그인버튼>
+    # <로그인버튼>def search(request):
+    #     movie = Movie.objects.all()
+    #     # GET request의 인자중에 searchword값이 있으면 가져오고, 없으면 빈 문자열 넣기
+    #     if request.method == "GET":
+    #         searchword = request.GET.get('searchword', '')
+    #         resultMovie = []
+    #
+    #         if searchword:  # searchword가 있다면
+    #             searchMovie = movie.filter(title__contains=searchword)  # 제목에 searchword가 포함된 레코드만 필터링
+    #
+    #             if searchMovie:
+    #                 # 영화 여러개 저장위해 데이터의 개수
+    #                 movie_count = searchMovie.count()
+    #                 for c in range(movie_count):
+    #                     # 데이터들 resultMovie리스트에 저장
+    #                     # 원본 주석처리
+    #                     # resultMovie.append({searchMovie[c].title:searchMovie[c].id})
+    #                     print(searchMovie[c].poster_path)
+    #                     poster_path = "https://image.tmdb.org/t/p/w500" + searchMovie[c].poster_path
+    #
+    #                     resultMovie.append({'title': searchMovie[c].title, 'id': searchMovie[c].id,'poster_path':poster_path,'asd':123})
+    #                     # 디테일 페이지 이동위해 id값도 넘겨준다
+    #                 return render(request, 'movies/searchresult.html',
+    #                               {'movie': movie, 'searchMovie': searchMovie, 'resultMovie': resultMovie})
+    #             else:
+    #                 # 아무것도 입력하지 않는다면,
+    #                 return render(request, 'movies/searchresult.html', {'resultMovie': resultMovie})
+    #
+    #         return render(request, 'movies/search.html')
+    #     # mainpage에서는
+    #     # <검색기능>작품의 제목,배우,감독을 검색해 해당 영화의 디테일 페이지로 연결하는 역할을 한다.
+    #     # 일단 작품의 제목으로 검색하는 것을 구현
+    #     # <로그인버튼>
 
 
 # 댓글 생성하기

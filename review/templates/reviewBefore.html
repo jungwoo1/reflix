@@ -20,8 +20,8 @@
 
     <div class="blog_details">
         <a class="d-inline-block" href="{% url 'review:redetail' review.id %}">
-            <h2>{{ review.title }}<br>
-                {{ review.movie_title}}</h2>
+            <h2>리뷰 제목:{{ review.title }}<br>
+                영화 제목:{{ review.movie_title}}</h2>
             <ul class="blog-info-link">
                 <li><a href="#"><i class="fa fa-user"></i> {{ review.user}}</a></li>
                 <li><a href="#">장르 : {{ review.genre}}</a></li>
